@@ -1,3 +1,7 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
+# Diese Klasse generiert ein Mastermind-Code
 class Codemaker
   def initialize()
     @code = []
@@ -20,7 +24,7 @@ class Codemaker
   
   def to_s
 
-    "uhrcode: #{@code}"
+    "Code: #{@code}"
 
   end
 end

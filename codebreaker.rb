@@ -1,3 +1,7 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
+# Diese Klasse enthält die logik zum Lösen des Codes
 require_relative './data.rb'
 require_relative './codemaker.rb'
 
@@ -13,7 +17,7 @@ class Codebreaker
   def main
 
     @code.generate_code()
-    puts @code
+    #puts @code
 
     10.times {
       @daten.input
@@ -33,6 +37,7 @@ class Codebreaker
     if (@hit[0] == "black" && @hit[1] == "black" && @hit[2] == "black" && @hit[3] == "black")
     else
       puts "LOSE"
+      puts "Der richtige code war: #{@code.code()}"
     end
 
   end
@@ -44,39 +49,30 @@ class Codebreaker
 
     puts "#{@zahlen[0]}, #{@zahlen[1]}, #{@zahlen[2]}, #{@zahlen[3]}"
     while i < 4
-      if (@code.code.include?(@zahlen[i]))
-        @hit[i] = "white"
-      end
       if (@zahlen[i] == @code.code[i])
         @hit[i] = "black"
+      elsif (@code.code.include?(@zahlen[i]))
+        @hit[i] = "white"
       end
+
       i += 1
     end
 
     counter_white = 0
     counter_black = 0
-    counter_w = [4]
-    counter_b = [4]
+    j=0
 
-    j = 0
     while j < 4
 
-      if (@hit[j] == "black")
-        if counter_b.include?(@zahlen[j])
-        else
-          counter_b.push(@zahlen[j])
-          counter_black += 1
-        end
-      elsif (@hit[j] == "white")
-        if counter_w.include?(@zahlen[j])
-        else
-          counter_w.push(@zahlen[j])
-          counter_white += 1
-        end
+      if (@hit[j] == "white")
+        counter_white += 1
+      elsif (@hit[j] == "black")
+        counter_black += 1
       end
 
-      j = j + 1
+      j += 1
     end
+
     puts("#{counter_white}: White | #{counter_black}: Black ")
     #puts "#{@hit[0]}, #{@hit[1]}, #{@hit[2]}, #{@hit[3]}"
   end

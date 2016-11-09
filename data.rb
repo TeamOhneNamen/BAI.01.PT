@@ -1,3 +1,7 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
+# Diese Klasse empfängt die Daten vom User(besitzt Exeption)
 class Daten
   
   attr_accessor :z1, :z2, :z3, :z4 
