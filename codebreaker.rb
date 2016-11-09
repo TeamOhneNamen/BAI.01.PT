@@ -3,7 +3,6 @@ require_relative './codemaker.rb'
 
 class Codebreaker
   def initialize()
-
     @zahlen = [4]
     @code = Codemaker.new()
     @hit = [4]
@@ -22,7 +21,8 @@ class Codebreaker
       @zahlen[2] = @daten.z3
       @zahlen[3] = @daten.z4
 
-      vergleichen
+      compare
+      hit_output
 
       if (@hit[0] == "black" && @hit[1] == "black" && @hit[2] == "black" && @hit[3] == "black")
         puts "WIN"
@@ -37,7 +37,7 @@ class Codebreaker
 
   end
 
-  def vergleichen
+  def compare
 
     counter_z = [4]
     i = 0
@@ -52,34 +52,30 @@ class Codebreaker
       end
       i += 1
     end
+    
+  end
 
+  def hit_output
     counter_white = 0
     counter_black = 0
     counter_w = [4]
     counter_b = [4]
-
+    
     j = 0
     while j < 4
-
       if (@hit[j] == "black")
-        if counter_b.include?(@zahlen[j])
-        else
-          counter_b.push(@zahlen[j])
-          counter_black += 1
-        end
+        counter_b.push(@zahlen[j])
+        counter_black += 1
       elsif (@hit[j] == "white")
-        if counter_w.include?(@zahlen[j])
-        else
-          counter_w.push(@zahlen[j])
-          counter_white += 1
-        end
-      end
-
-      j = j + 1
+        counter_w.push(@zahlen[j])
+        counter_white += 1
+    end
+    j = j + 1
     end
     puts("#{counter_white}: White | #{counter_black}: Black ")
     #puts "#{@hit[0]}, #{@hit[1]}, #{@hit[2]}, #{@hit[3]}"
   end
+
 end
 
 breakthecode = Codebreaker.new()

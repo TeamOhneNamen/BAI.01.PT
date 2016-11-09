@@ -9,9 +9,7 @@ class Codemaker
   end
 
   def generate_code
-
     4.times {@code.push(Random.rand(1..4))}
-      
   end
 
   def code
@@ -19,8 +17,7 @@ class Codemaker
   end  
   
   def to_s
-
     "uhrcode: #{@code}"
-
   end
+  
 end
