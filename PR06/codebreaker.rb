@@ -7,9 +7,9 @@ require_relative './codemaker.rb'
 
 class Codebreaker
   def initialize(length, range)
-    @zahlen = [4]
+    @zahlen = [@length]
     @code = Codemaker.new
-    @hit = [4]
+    @hit = [@length]
     @daten = Daten.new()
     @length = length
     @range = range
@@ -23,7 +23,7 @@ class Codebreaker
       @daten.input(@length, @range)
       @zahlen = @daten.user_input    
 
-      compare
+      compare(@zahlen, @code.code)
       hit_output
 
       if (@hit.each == "black")
@@ -40,46 +40,18 @@ class Codebreaker
 
   end
   
-  def main_test(zahl1, zahl2, zahl3, zahl4)
+  
+  def compare(answer, solution)
 
-    @code = [1, 2, 3, 4]
-    #puts @code
-
-    10.times {
-      @zahlen[0] = zahl1
-      @zahlen[1] = zahl2
-      @zahlen[2] = zahl3
-      @zahlen[3] = zahl4
-
-      compare
-      hit_output
-
-      if (@hit[0] == "black" && @hit[1] == "black" && @hit[2] == "black" && @hit[3] == "black")
-        puts "WIN"
-        return "WIN"
-        SystemExit
-      end
-    }
-
-    if (@hit[0] == "black" && @hit[1] == "black" && @hit[2] == "black" && @hit[3] == "black")
-    else
-      puts "LOSE"
-      puts "Der richtige code war: #{@code.code()}"
-    end
-
-  end
-
-  def compare
-
-    counter_z = [4]
+    counter_z = [@length]
     i = 0
     
     puts "#{@zahlen}"
 
     while i < @length
-      if (@zahlen[i] == @code.code[i])
+      if (answer[i] == solution[i])
         @hit[i] = "black"
-      elsif (@code.code.include?(@zahlen[i]))
+      elsif (solution.include?(@zahlen[i]))
         @hit[i] = "white"
       end
       i += 1
@@ -90,36 +62,32 @@ class Codebreaker
   def hit_output
     counter_white = 0
     counter_black = 0
-    counter_w = [4]
-    counter_b = [4]
+    counter_w = [@length]
+    counter_b = [@length]
     
     j = 0
-    while j < 4
+    while j < @length
       if (@hit[j] == "black")
         counter_b.push(@zahlen[j])
-        counter_black += 1
+        j = j + 1
       elsif (@hit[j] == "white")
         counter_w.push(@zahlen[j])
-        counter_white += 1
-    end
-    j = j + 1
-    j=0
-
-    while j < 4
-
-      if (@hit[j] == "white")
-        counter_white += 1
-      elsif (@hit[j] == "black")
-        counter_black += 1
+        j = j + 1
+        break
+      else
+      j = j + 1
       end
-
-      j += 1
     end
-
+    i=0
+    @hit.length.times{
+      counter_black += 1 if (@hit[i] == "black")
+      counter_white += 1 if (@hit[i] == "white") 
+      i += 1
+    }
     puts("#{counter_white}: White | #{counter_black}: Black ")
-    #puts "#{@hit[0]}, #{@hit[1]}, #{@hit[2]}, #{@hit[3]}"
+    #puts "#{@code}"
+    #puts "#{@hit}"
   end
 
-end
 end
 
