@@ -11,6 +11,7 @@ class Daten
   end
   
   def input(length, range)
+      puts "code?"
       i = 0
       length.times{
       @user_input << gets.chomp.to_i

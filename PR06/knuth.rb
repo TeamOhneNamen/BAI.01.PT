@@ -8,12 +8,14 @@ require "benchmark"
 
 class Game
   attr_accessor :attempt, :type
-  def initialize
+  def initialize(length, range)
     @attempt = 1
     @type = type
     @daten = Daten.new
     @cm = Codemaker.new
     @cb = Codebreaker.new(4, 4)
+    @length = length
+    @range = range
   end
 
   def create_code
@@ -22,11 +24,6 @@ class Game
     @code = @cm.code.join
     puts @code
   end
-
-  def input_code
-    @user_input = @daten.input(4, 4).join
-  end
-
 
   def verify_input(input, code = @code)
     red_pins = 0
@@ -46,13 +43,13 @@ class Game
   end
 
   def possibilities_set
-    @all_possibilities = (1..6).to_a.repeated_permutation(4).to_a.join.scan(/.{4}/)# 4 = length, 6 = range
+    @all_possibilities = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/.{@length}/)# 4 = length, 6 = range
   end
   def s_list
-    @s = (1..6).to_a.repeated_permutation(4).to_a.join.scan(/.{4}/) 
+    @s = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/.{@length}/) 
   end
   def pin_possibilities
-    @all_pin_possibilities = (0..4).to_a.repeated_permutation(2).to_a.map { |x| x if x[0]+x[1] <= 4 }.compact 
+    @all_pin_possibilities = (0..@length).to_a.repeated_permutation(2).to_a.map { |x| x if x[0]+x[1] <= @length }.compact 
   end
 
   def remove_wrong_guesses(guess)
@@ -96,18 +93,20 @@ class Game
   end 
 
   def fast_knuth
-    while @code == nil
-    input_code
-    @code = @user_input
-    end
-
+    @code = @daten.input(@length, @range).join
     possibilities_set 
     s_list 
     pin_possibilities 
-
-    remove_wrong_guesses("1122")
+    
+    first_guess_array = []
+    first_guess = 0
+    @length/2.times{first_guess_array.push(1)}
+    @length/2.times{first_guess_array.push(2)}
+    puts first_guess_array.join
+    first_guess = first_guess_array.join
+    remove_wrong_guesses("first_guess")
     @attempt -= 1
-    print "#{@attempt}: 1122 - #{verify_input("1122")}\n"
+    print "#{@attempt}: first_guess - #{verify_input("first_guess")}\n"
     while @s.length > 1
       remove_wrong_guesses(fast_score_guesses)
       print "#{@attempt}: #{@guessed_attempt} - #{verify_input(@guessed_attempt)}; guessed in #{@time.round(6)} ms\n"
@@ -116,24 +115,7 @@ class Game
       return "secret code #{@s}, guessed in #{@attempt} moves."
       end
     end
-  end
-
-  def game_type
-    print 'do you want to "guess" or "create" a code? '
-    while @type == nil
-    @type = gets.chomp
-    if @type == "guess"
-      @cb.main()
-    elsif @type == "create"
-      fast_knuth
-    else 
-      'wrong type, choose either "guess" or "create".'
-      @type = nil
-    end
-    end 
-  end
-
-  
+  end  
 end
 
 #my_game = Game.new

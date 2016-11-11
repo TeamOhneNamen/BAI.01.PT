@@ -9,7 +9,7 @@ class Codebreaker
   def initialize(length, range)
     @zahlen = [@length]
     @code = Codemaker.new
-    @hit = [@length]
+    @hit = []
     @daten = Daten.new()
     @length = length
     @range = range
@@ -25,14 +25,13 @@ class Codebreaker
 
       compare(@zahlen, @code.code)
       hit_output
-
-      if (@hit.each == "black")
-        puts "WIN"
-        SystemExit
+      if (win_check)
+        break
       end
     }
 
-    if (@hit.each == "black")
+    if (win_check)
+      puts "WIN"
     else
       puts "LOOOOOOOOOSER"
       puts "Der richtige code war: #{@code.code()}"
@@ -50,9 +49,9 @@ class Codebreaker
 
     while i < @length
       if (answer[i] == solution[i])
-        @hit[i] = "black"
+        @hit.push("black")
       elsif (solution.include?(@zahlen[i]))
-        @hit[i] = "white"
+        @hit.push("white")
       end
       i += 1
     end
@@ -89,5 +88,18 @@ class Codebreaker
     #puts "#{@hit}"
   end
 
+  def win_check
+    i = 0
+    wincount = 0
+    winyn = false
+    while i < @hit.length
+      if (@hit[i] == 'black')
+          wincount += 1
+      end
+      i += 1 
+      winyn = wincount == @hit.length
+      return winyn
+    end
+  end
 end
 
