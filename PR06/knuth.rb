@@ -103,7 +103,6 @@ class Game
 
   def fast_knuth
     @code = @daten.input(@length, @range).join
-    puts "input #{@code}"
     possibilities_set 
     s_list 
     pin_possibilities 
@@ -111,7 +110,6 @@ class Game
     first_guess_array = []
     first_guess = 0
     @length.times{first_guess_array.push(Random.rand(1..@range))}
-    puts first_guess_array.join
     first_guess = first_guess_array.join
     
     remove_wrong_guesses("#{first_guess}")

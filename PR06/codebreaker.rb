@@ -6,24 +6,27 @@ require_relative './data.rb'
 require_relative './codemaker.rb'
 
 class Codebreaker
-  def initialize(length, range)
+  def initialize(length, range, code_solution = [])
     @zahlen = [@length]
     @code = Codemaker.new
     @hit = []
     @daten = Daten.new()
     @length = length
     @range = range
+    @code_solution = code_solution
   end
 
   def main
-
-    @code.generate_code(@length, @range)
+    if (@code_solution.empty?)
+      @code.generate_code(@length, @range)
+      @code_solution = @code.code
+    end
 
     10.times {
       @daten.input(@length, @range)
       @zahlen = @daten.user_input    
 
-      compare(@zahlen, @code.code)
+      compare(@zahlen, @code_solution)
       hit_output
       if (win_check)
         break
@@ -34,7 +37,7 @@ class Codebreaker
       puts "WIN"
     else
       puts "LOOOOOOOOOSER"
-      puts "Der richtige code war: #{@code.code()}"
+      puts "Der richtige code war: #{@code_solution}"
     end
 
   end
