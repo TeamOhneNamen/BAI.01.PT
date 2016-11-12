@@ -13,9 +13,9 @@ class Game
     @type = type
     @daten = Daten.new
     @cm = Codemaker.new
-    @cb = Codebreaker.new(4, 4)
     @length = length
     @range = range
+    @cb = Codebreaker.new(length, range)
   end
 
   def create_code
@@ -25,12 +25,17 @@ class Game
     puts @code
   end
 
-  def verify_input(input, code = @code)
+  def verify_input(input, code_in = @code) #, code = @code
+    code = ''
+    #code = @code
+    code = code_in.to_s
     red_pins = 0
     white_pins = 0
+    
+    full_matches = []
 
     input = input.split('').map(&:to_i) 
-    code = code.split('').map(&:to_i) 
+    code = code.split('').map(&:to_i)
 
     # find red pins:
     full_matches = input.zip(code).map {|x, y| y-x} 
@@ -43,10 +48,14 @@ class Game
   end
 
   def possibilities_set
-    @all_possibilities = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/.{@length}/)# 4 = length, 6 = range
+    #creates an array with all possible combinations @all_possibilities
+    length_array = []
+    @length.times{length_array.push(".")}
+    @length_dot = length_array.join
+    @all_possibilities = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/#{@length_dot}/)
   end
   def s_list
-    @s = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/.{@length}/) 
+    @s = (1..@range).to_a.repeated_permutation(@length).to_a.join.scan(/#{@length_dot}/)
   end
   def pin_possibilities
     @all_pin_possibilities = (0..@length).to_a.repeated_permutation(2).to_a.map { |x| x if x[0]+x[1] <= @length }.compact 
@@ -54,7 +63,7 @@ class Game
 
   def remove_wrong_guesses(guess)
     @s.map! {|temp_guess| verify_input(temp_guess, guess) == verify_input(guess) ? temp_guess : nil}.compact!
-    @attempt += 1 
+    @attempt += 1
     @s 
   end
 
@@ -94,19 +103,20 @@ class Game
 
   def fast_knuth
     @code = @daten.input(@length, @range).join
+    puts "input #{@code}"
     possibilities_set 
     s_list 
     pin_possibilities 
     
     first_guess_array = []
     first_guess = 0
-    @length/2.times{first_guess_array.push(1)}
-    @length/2.times{first_guess_array.push(2)}
+    @length.times{first_guess_array.push(Random.rand(1..@range))}
     puts first_guess_array.join
     first_guess = first_guess_array.join
-    remove_wrong_guesses("first_guess")
+    
+    remove_wrong_guesses("#{first_guess}")
     @attempt -= 1
-    print "#{@attempt}: first_guess - #{verify_input("first_guess")}\n"
+    print "#{@attempt}: #{first_guess} - #{verify_input("#{first_guess}")}\n"
     while @s.length > 1
       remove_wrong_guesses(fast_score_guesses)
       print "#{@attempt}: #{@guessed_attempt} - #{verify_input(@guessed_attempt)}; guessed in #{@time.round(6)} ms\n"
@@ -117,6 +127,3 @@ class Game
     end
   end  
 end
-
-#my_game = Game.new
-#my_game.game_type
