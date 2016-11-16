@@ -8,25 +8,19 @@ require 'test/unit'
 
 class RUnitMastermind < Test::Unit::TestCase
   def setup()
-    @test_data = Data.new
-    @to_high = @test_data.input_test(1, 2, 3, 5)
-    @to_low = @test_data.input_test(0, 2, 3, 4)
-    @accepted = @test_data.input_test(1, 2, 3, 4)
+    @test_breaker_positive = Codebreaker.new(4, 4, [1, 2, 3, 4], [1, 2, 3, 4]).main
+    @test_breaker_negative = Codebreaker.new(4, 4, [4, 4, 4, 4], [1, 3, 3, 3]).main
+    @test_black_positive1 = Codebreaker.new(4, 4, [1, 2, 3, 4], [1, 2, 3, 4]).counter_black
+    @test_black_positive2 = Codebreaker.new(4, 4, [4, 4, 4, 4], [1, 1, 1, 1]).counter_black
     
-    @test_breaker = Codebreaker.new
-    @win = @test_breaker.main_test(1, 2, 3, 4)
-    @lose = @test_breaker.main_test(4, 2, 3, 4)
-    
-  end
-  
-  
-  def test_data
-    assert_raise(@to_low)
-    assert_raise(@to_high)
-    assert_nothing_raised(@accepted)
   end
   def test_breaker
-    assert_equal(@win, "WIN")
-    assert_not_equal(@lose, "WIN")
+    assert(@test_breaker_positive)
+    assert_equal(@test_breaker_negative, false)
+  end
+  
+  def test_black
+    assert_equal(@test_black_positive1, 4)
+    assert_not_equal(@test_black_positive2, 4)
   end
 end

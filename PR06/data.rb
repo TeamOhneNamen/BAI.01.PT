@@ -4,8 +4,6 @@
 # Diese Klasse empfängt die Daten vom User(besitzt Exeption)
 class Daten
   
-  attr_accessor :z1, :z2, :z3, :z4 
-  
   def initialize()
     @user_input = []
   end
