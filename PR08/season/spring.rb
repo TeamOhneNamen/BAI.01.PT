@@ -1,6 +1,6 @@
 require_relative './season.rb'
 class Spring < Season
-  def create
+  def create(lenguage = @lenguage)
     if @lenguage == 'en'
       @name = 'spring'
     elsif @lenguage == 'de'
