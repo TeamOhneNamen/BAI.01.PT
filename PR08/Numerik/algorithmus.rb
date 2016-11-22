@@ -2,7 +2,6 @@ class Algorithm
   
   def solve(x ,n, i = 1, t = 1)
     if ((x < 0) || !x.is_a?(Integer) || (x > 2))
-      raise ArgumentError, "should be Int 0 < x <= 2"
     end
     @solution = 0.0
     t.times{
