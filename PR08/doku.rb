@@ -1,7 +1,7 @@
 Numerik:
 Zunächst haben wir die Formel iterativ implementiert in algorithmus.rb dann diese rekursiv umgestellt (numerik_rekussiv.rb) und dann innerhalb dieses Skripts mit reduce
 experimentiert und herausgefunden, dass diese Methode sich sehr gut für die Implementierung von Akkumulationen eignet. Des Weiteren haben wir noch eine Exception eingebaut
-um die Bedingung < x <= 2 zu gewährleisten. 
+um die Bedingung 0 < x <= 2 zu gewährleisten. 
   Schwierigkeiten waren hier von der Iterativen auf die Rehursive Implentierung zu schließen.
 
 Obfuscated Ruby:
