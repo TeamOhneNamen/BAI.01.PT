@@ -1,9 +1,11 @@
 # Author:: Ferdinand Trendelenburg
 # Author:: Thorben Schomacker
-class NumerikRekursiv
-  $solution = 0.0
-  $counter = 0
-  
+
+class Numerik
+  def initialize
+    @solution_recursive = 0.0
+    @counter = 0
+  end
   def solve_iterative(x ,n, i = 1, t = 1)
       if (x.is_a?(Integer))
         x = x.to_f
@@ -16,7 +18,7 @@ class NumerikRekursiv
           @solution_iterative = @solution_iterative + (((-1)**(i+1)) * (((x - 1) ** i) / i))
           i += 1
         }
-        puts "Solution: #{@solution_iterative} with n: #{n} \ntarget:   #{Math.log(x)}"
+        #puts "Solution: #{@solution_iterative} with n: #{n} \ntarget:   #{Math.log(x)}"
         @solution_iterative
       end
     end
@@ -28,15 +30,16 @@ class NumerikRekursiv
     if ((x < 0.0) || (x > 2.0))
       raise ArgumentError, "0 < x <= 2"
     else
-      $solution += (((-1)**(i+1)) * (((x - 1) ** i) / i))
+      @solution_recursive += (((-1)**(i+1)) * (((x - 1) ** i) / i))
 
-      if $counter < n
+      if @counter < n
         i += 1
-        $counter += 1
-        solve(x, n, i)
+        @counter += 1
+        solve_recursive(x, n, i)
       else
-        puts "Solution: #{$solution} with n: #{n} \ntarget:   #{Math.log(x)}"
+        #puts "Solution: #{@solution_recursive} with n: #{n} \ntarget:   #{Math.log(x)}"
       end
+      @solution_recursive
     end
   end
 
@@ -62,9 +65,6 @@ class NumerikRekursiv
   
 end
 
-alg = NumerikRekursiv.new()
+alg = Numerik.new()
 #alg.solve(2, 1000) # way I calculated towards a relative precise
 #-> from n = 10000 is the calculation precise on six positions after float point
-alg.solve_recursive(2.0, 1000)
-alg.es_gilt
-puts alg.reduce
