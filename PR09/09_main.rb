@@ -7,6 +7,8 @@ puts kitty
 
 #john = Human.new
 
+
+
 fluffy = Cat.new("fluffy")
 fluffy.kill(kitty)
 #john.kill(kitty)

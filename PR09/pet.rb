@@ -1,7 +1,10 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
 require 'date'
 class Pet
   
-  def create(name, race, owner = nil, lifes = 1)
+  def create(name, owner, race, lifes = 1)
     @name = name
     @race = race
     @owner = owner

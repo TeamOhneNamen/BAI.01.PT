@@ -1,3 +1,6 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
 class Human
   def initialize(name)
     @name = name
@@ -8,9 +11,9 @@ class Human
   end
   
   def pet(pet)
-    pet.pet
+    pet.pet(self)
   end
   def feed(pet)
-    pet.feed
+    pet.feed(self)
   end
 end

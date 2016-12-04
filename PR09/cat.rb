@@ -1,11 +1,16 @@
+# Author:: Ferdinand Trendelenburg
+# Author:: Thorben Schomacker
+
 require_relative './pet.rb'
 require_relative './human.rb'
 
 class Cat < Pet
-  def initialize(name, race = "cat", owner = nil, lifes = 9)
-    create(name, race, owner, lifes)
+  def initialize(name, owner = nil, race = "cat", lifes = 9)
+    create(name, owner = nil, race, lifes)
     @staff = []
-    add_staff('john')
+    staff = @owner
+    @owner = nil
+    add_staff(staff)
   end
   
   def kill(other)
@@ -32,4 +37,15 @@ class Cat < Pet
       raise ArgumentError, 'choose between pet or feed'
     end
   end 
+  
+  def pet(human)
+    if @staff.include?(human)
+      @petted = true
+    end
+  end
+  def feed
+    if @staff.include?(human)
+      @feeded = true
+    end
+  end
 end
