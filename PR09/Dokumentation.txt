@@ -1,0 +1,8 @@
+Author:: Ferdinand Trendelenburg
+Author:: Thorben Schomacker
+
+Dokumentation
+
+Diese Aufgabe war nicht besonders schwer und hat beim Lösen sogar Freude bereitet, als erstes haben wir uns überlegt, wie wir an die ganze Sache am besten herangehen sollten.
+Dabei fiel uns auf, dass wir, hätten wir einfach so drauf losgeschrieben, viel mehr Dinge übersehen hätten, an die wir so gleich gedacht haben.
+Die Sache mit der Sichtbarkeit war die kniffeligste Sache, an der wir uns auch einiges an Zeit aufgehängt haben! Aber mit ein weniug Recherche ging auch das locker von der Hand.

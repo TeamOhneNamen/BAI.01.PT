@@ -34,7 +34,7 @@ class TeilTest < Test::Unit::TestCase
     @other_car = Teil.new("car",10.5,[])
       
     @wrong_designation = Teil.new(glass panel, 19.5, [])
-    @wrong_weight = Teil.new("glass panel", "19.5"", [])
+    @wrong_weight = Teil.new("glass panel", "19.5", [])
     @correct_types = Teil.new("glass panel", 19.5, [])   
   end
 
